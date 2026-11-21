@@ -1,6 +1,6 @@
 'use strict';
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = window.location.origin;
 const form = document.getElementById('prediction-form');
 const statusEl = document.getElementById('api-status');
 const statusBox = statusEl.closest('.live-indicator');

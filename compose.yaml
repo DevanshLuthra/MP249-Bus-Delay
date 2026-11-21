@@ -1,0 +1,11 @@
+
+services:
+  bus-delay-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: surat-bus-delay:v1
+    container_name: surat-bus-app
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
