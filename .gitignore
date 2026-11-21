@@ -6,3 +6,7 @@ __pycache__/
 mlruns/
 mlartifacts/
 .dvc/cache/
+mlflow.db
+mlflow.db-shm
+mlflow.db-wal
+models/
