@@ -1,4 +1,4 @@
-\# Surat City Bus Delay Prediction — End-to-End MLOps
+﻿\# Surat City Bus Delay Prediction ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â End-to-End MLOps
 
 
 
@@ -228,7 +228,7 @@ The project uses a `RandomForestRegressor` with preprocessing for numerical and 
 
 | RMSE | 1.7814 |
 
-| R² | 0.8959 |
+| RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â² | 0.8959 |
 
 
 
@@ -252,7 +252,7 @@ A separate chronological holdout dataset was used to compare the previous produc
 
 | RMSE | 6.6648 | 2.7338 |
 
-| R² | 0.3391 | 0.8888 |
+| RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â² | 0.3391 | 0.8888 |
 
 
 
@@ -586,7 +586,7 @@ Drift detection includes:
 
 
 
-\- Kolmogorov–Smirnov tests for numerical features
+\- KolmogorovÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“Smirnov tests for numerical features
 
 \- Chi-square tests for categorical features
 
@@ -872,9 +872,13 @@ https://github.com/DevanshLuthra/MP249-Bus-Delay
 
 
 
-\*\*Project:\*\* MP249 — Surat City Bus Delay Prediction
+\*\*Project:\*\* MP249 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Surat City Bus Delay Prediction
 
 
 
 \*\*Purpose:\*\* Academic demonstration of an end-to-end MLOps lifecycle.
+
+## Detailed System Architecture
+
+[View MLOps Architecture Diagram](docs/architecture.md)
 
