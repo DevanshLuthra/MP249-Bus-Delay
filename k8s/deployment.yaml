@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: surat-bus-delay
-          image: host.docker.internal:5001/surat-bus-delay:v2
+          image: host.docker.internal:5001/surat-bus-delay:v2.1
           imagePullPolicy: Never
           ports:
             - containerPort: 8000

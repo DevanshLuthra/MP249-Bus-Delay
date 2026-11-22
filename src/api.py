@@ -69,7 +69,7 @@ def predict(data: BusInput):
     return {
         "predicted_delay_minutes": round(max(0, prediction), 2),
         "model": "RandomForestRegressor",
-        "model_version": "1"
+        "model_version": "2"
     }
 app.mount(
     "/app",
