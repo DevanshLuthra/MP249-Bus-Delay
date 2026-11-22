@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: surat-bus-delay
+  labels:
+    app: surat-bus-delay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: surat-bus-delay
+  template:
+    metadata:
+      labels:
+        app: surat-bus-delay
+    spec:
+      containers:
+        - name: surat-bus-delay
+          image: host.docker.internal:5001/surat-bus-delay:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
