@@ -1,0 +1,11 @@
+{
+    "reference_dataset": "train_clean.csv",
+    "current_dataset": "later.csv",
+    "threshold": 0.05,
+    "total_features": 8,
+    "drifted_features_count": 1,
+    "drifted_features": [
+        "driver_exp_yr"
+    ],
+    "overall_drift_detected": true
+}

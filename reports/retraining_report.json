@@ -1,0 +1,17 @@
+{
+    "drift_triggered": true,
+    "training_rows": 1234,
+    "holdout_rows": 66,
+    "existing_model": {
+        "mae": 5.439937206484099,
+        "rmse": 6.6647509869295805,
+        "r2": 0.33905396315811154
+    },
+    "candidate_model": {
+        "mae": 1.8290564246181067,
+        "rmse": 2.733841248626526,
+        "r2": 0.8887897719332212
+    },
+    "candidate_improved": true,
+    "production_model_replaced": false
+}

@@ -1,0 +1,9 @@
+feature,type,test,p_value,drift_detected
+route_km,numerical,KS,0.07101365957098715,False
+stops,numerical,KS,0.1522099768817253,False
+passengers,numerical,KS,0.778893540718004,False
+hour,numerical,KS,0.9307683701554127,False
+temp_c,numerical,KS,0.7463960713437322,False
+driver_exp_yr,numerical,KS,2.1149274731259613e-73,True
+weather,categorical,Chi-square,0.9232788277159422,False
+depot_zone,categorical,Chi-square,0.7465907640074312,False
