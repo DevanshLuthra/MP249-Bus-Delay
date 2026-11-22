@@ -13,3 +13,6 @@ models/
 # Automated drift monitoring outputs
 logs/
 reports/monitoring_history.csv
+
+reports/retraining_state.json
+scripts/monitor_drift.backup.py
