@@ -10,3 +10,6 @@ mlflow.db
 mlflow.db-shm
 mlflow.db-wal
 models/
+# Automated drift monitoring outputs
+logs/
+reports/monitoring_history.csv
