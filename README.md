@@ -1,22 +1,13 @@
-﻿\# Surat City Bus Delay Prediction ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â End-to-End MLOps
-
-
+﻿\# Surat City Bus Delay Prediction‚An End-to-End MLOps
 
 An end-to-end Machine Learning Operations (MLOps) project for predicting bus delays in Surat, India, using machine learning, automated testing, data versioning, model tracking, containerization, Kubernetes deployment, data drift detection, and drift-triggered retraining.
 
 
-
 \## Project Overview
-
-
 
 The project predicts bus delays in minutes based on route characteristics, passenger demand, weather, driver experience, and temporal information.
 
-
-
 It demonstrates the complete MLOps lifecycle, from dataset preparation and model training to production inference, monitoring, and controlled model updates.
-
-
 
 \*\*Project ID:\*\* MP249  
 
@@ -29,10 +20,7 @@ It demonstrates the complete MLOps lifecycle, from dataset preparation and model
 \*\*Docker Release:\*\* v2.1
 
 
-
 \## Technology Stack
-
-
 
 | Category | Technologies |
 
@@ -67,8 +55,6 @@ It demonstrates the complete MLOps lifecycle, from dataset preparation and model
 
 
 \## System Architecture
-
-
 
 ```text
 
@@ -168,15 +154,9 @@ It demonstrates the complete MLOps lifecycle, from dataset preparation and model
 
 \## Dataset and Features
 
-
-
 The model uses historical bus operation records.
 
-
-
 \*\*Input features:\*\*
-
-
 
 \- Route distance (`route\_km`)
 
@@ -198,11 +178,7 @@ The model uses historical bus operation records.
 
 \- Month (`month`)
 
-
-
 \*\*Prediction target:\*\* `delay\_min`
-
-
 
 The API derives the day of week and month automatically from the provided date.
 
@@ -210,15 +186,9 @@ The API derives the day of week and month automatically from the provided date.
 
 \## Machine Learning Model
 
-
-
 The project uses a `RandomForestRegressor` with preprocessing for numerical and categorical variables.
 
-
-
 \### Initial Model Performance
-
-
 
 | Metric | Result |
 
