@@ -1,124 +1,127 @@
-\# MP249 — Surat City Bus Delay Prediction
+# MP249 - System Architecture
 
-
-
-\## End-to-End MLOps Architecture
-
-
+## 1. End-to-End MLOps Pipeline
 
 ```mermaid
-
 flowchart TD
-
-&#x20;   A\["Bus Delay Datasets"] --> B\["Data Cleaning"]
-
-&#x20;   B --> C\["DVC Data Versioning"]
-
-&#x20;   C --> D\["Random Forest Model Training"]
-
-&#x20;   D --> E\["MLflow Experiment Tracking"]
-
-&#x20;   E --> F\["MLflow Model Registry"]
-
-&#x20;   F --> G\["FastAPI Prediction Service"]
-
-&#x20;   G --> H\["Docker Container"]
-
-&#x20;   H --> I\["Kubernetes Deployment"]
-
-&#x20;   I --> J\["SURAT MOVE Web Interface"]
-
-
-
-&#x20;   C --> K\["Statistical Drift Detection"]
-
-&#x20;   K --> L\["Scheduled Monitoring"]
-
-&#x20;   L --> M{"Drift and Unevaluated Dataset?"}
-
-&#x20;   M -->|No| N\["Log Results and Skip Retraining"]
-
-&#x20;   M -->|Yes| O\["Candidate Model Retraining"]
-
-&#x20;   O --> P\["Model Performance Comparison"]
-
-&#x20;   P --> Q\["Manual Deployment Approval"]
-
-&#x20;   Q -.->|Approved| H
-
-
-
-&#x20;   R\["GitHub Actions CI"] -.-> G
-
+    A[Training Dataset] --> B[DVC Versioning]
+    B --> C[Data Quality Audit]
+    C --> D[Cleaning and Preprocessing]
+    D --> E[Random Forest Experiments]
+    E --> F[MLflow Tracking]
+    F --> G[Model Registry]
+    G --> H[Champion V2]
+    H --> I[Deployment Artifact]
+    I --> J[FastAPI]
+    J --> K[Docker]
+    K --> L[Kubernetes]
+    M[Web Interface] <--> J
 ```
 
+## 2. Prediction Architecture
 
+```mermaid
+flowchart LR
+    A[User Input] --> B[Frontend]
+    B --> C[FastAPI]
+    C --> D[Pydantic Validation]
+    D --> E[Preprocessing Pipeline]
+    E --> F[Random Forest V2]
+    F --> G[Predicted Delay]
+    G --> B
+    F --> H[JSON Prediction Logs]
+```
 
-\## Architecture Components
+## 3. Kubernetes Architecture
 
+```mermaid
+flowchart TD
+    A[User Browser] --> B[Port Forward 8005]
+    B --> C[mp249-svc ClusterIP]
+    C --> D[Pod 1]
+    C --> E[Pod 2]
+    C --> F[Pod 3]
+    D --> G[Champion Model]
+    E --> G
+    F --> G
+```
 
+Each pod runs the mp249-api:1.0 image on port 8000.
+
+Readiness and liveness probes use the /health endpoint.
+
+## 4. Drift and Retraining Architecture
+
+```mermaid
+flowchart TD
+    A[Reference Training Data] --> C[PSI Calculation]
+    B[Later Dataset] --> C
+    C --> D{PSI above 0.25?}
+    D -->|No| E[Record Monitoring Results]
+    D -->|Yes| F[Generate Drift Alert]
+    F --> G[Manual Candidate Evaluation]
+    G --> H[Chronological 70-30 Split]
+    H --> I[Train Candidate]
+    I --> J[Compare Check-set MAE]
+    J --> K{Improvement at least 5 percent?}
+    K -->|Yes| L[Promote Candidate]
+    K -->|No| M[Retain Champion]
+    L --> N[Export Model and Redeploy]
+```
+
+Monitoring does not automatically trigger model replacement.
+
+## 5. Continuous Integration
+
+```mermaid
+flowchart LR
+    A[Git Push] --> B[GitHub Actions]
+    B --> C[Python 3.12]
+    C --> D[Install Dependencies]
+    D --> E[Run Pytest]
+    E --> F{Tests Pass?}
+    F -->|Yes| G[Successful CI]
+    F -->|No| H[Fix Errors]
+```
+
+## 6. Implementation Components
 
 | Component | Implementation |
-
 |---|---|
+| Configuration | params.yaml |
+| Data audit | src/audit_data.py |
+| Data cleaning | src/clean_data.py |
+| Experiment tracking | src/train_experiments.py |
+| Model registration | src/register_models.py |
+| Drift detection | src/psi_monitor.py |
+| Monitoring alerts | scripts/monitor_drift.py |
+| Holdout prediction | src/predict_holdout.py |
+| API entry point | app/main.py |
+| API implementation | src/api.py |
+| Frontend | frontend/ |
+| Deployment artifact | models/model.joblib |
+| Containerization | Dockerfile |
+| Orchestration | k8s/ |
+| Continuous integration | .github/workflows/ci.yml |
 
-| Data preprocessing | `src/clean\_data.py` |
+## 7. Verified Deployment Results
 
-| Model training | `src/train\_model.py` |
+- Champion model: Version 2
+- Docker image: mp249-api:1.0
+- Kubernetes deployment: mp249-api
+- Kubernetes service: mp249-svc
+- Ready replicas: 3
+- Pod restarts at final verification: 0
+- Automated tests: 16 passed
+- Example prediction: 13.62 minutes
+- Check-set MAE improvement: 62.98 percent
 
-| Model registry | MLflow |
+## 8. Deployment Controls
 
-| Data versioning | DVC |
+Model promotion and application deployment are separate operations.
 
-| Prediction API | `src/api.py` |
+A registry alias change does not automatically update the deployed model file.
 
-| Frontend | `frontend/` |
+The deployed artifact must be updated and the container rebuilt before deploying a new model version.
 
-| Containerization | Docker |
-
-| Orchestration | Kubernetes |
-
-| Drift detection | `src/detect\_drift.py` |
-
-| Scheduled monitoring | `scripts/monitor\_drift.py` |
-
-| Candidate retraining | `src/retrain\_model.py` |
-
-| Continuous integration | GitHub Actions |
-
-
-
-\## Production Deployment
-
-
-
-\- \*\*Production model:\*\* RandomForestRegressor, version 2
-
-\- \*\*Docker image:\*\* `surat-bus-delay:v2.1`
-
-\- \*\*Kubernetes deployment:\*\* `surat-bus-delay`
-
-\- \*\*MLflow champion alias:\*\* version 2
-
-\- \*\*MLflow rollback alias:\*\* version 1
-
-
-
-\## Monitoring and Retraining
-
-
-
-The monitoring workflow detects statistical data drift and checks a SHA256 fingerprint of the datasets before triggering candidate retraining.
-
-
-
-When a dataset has already been evaluated, retraining is skipped.
-
-
-
-When drift is detected for a dataset that has not yet been evaluated, the system retrains a candidate and compares its performance with the existing model.
-
-
-
-Production deployment requires manual approval. The monitoring workflow does not automatically replace the production model.
-
+Historical MLflow artifact paths are machine-specific. Portable model exports are provided separately.

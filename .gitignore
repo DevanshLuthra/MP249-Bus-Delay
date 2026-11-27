@@ -6,13 +6,12 @@ __pycache__/
 mlruns/
 mlartifacts/
 .dvc/cache/
-mlflow.db
 mlflow.db-shm
 mlflow.db-wal
-models/
-# Automated drift monitoring outputs
+models/*
+!models/model.joblib
+*.tar
 logs/
 reports/monitoring_history.csv
-
 reports/retraining_state.json
 scripts/monitor_drift.backup.py

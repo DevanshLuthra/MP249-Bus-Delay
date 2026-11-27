@@ -12,7 +12,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 ROOT = Path(__file__).resolve().parents[1]
 TRAIN_PATH = ROOT / "data" / "train_clean.csv"
-LATER_PATH = ROOT / "data" / "later.csv"
+LATER_PATH = ROOT / "data" / "raw" / "later.csv"
 DRIFT_PATH = ROOT / "reports" / "drift_summary.json"
 MODEL_PATH = ROOT / "models" / "bus_delay_model.joblib"
 CANDIDATE_PATH = ROOT / "models" / "bus_delay_candidate.joblib"

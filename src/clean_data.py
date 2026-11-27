@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
-INPUT = ROOT / "data" / "train.csv"
+INPUT = ROOT / "data" / "raw" / "train.csv"
 OUTPUT = ROOT / "data" / "train_clean.csv"
 
 def clean_data(df):

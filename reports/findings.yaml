@@ -1,0 +1,53 @@
+group_id: G141
+problem_id: MP249
+data_issues:
+  leaking_column:
+    present: true
+    column: delay_logged_by_conductor
+  unit_mixup:
+    present: false
+    column: null
+    group_value: null
+    factor: null
+  sentinel_value:
+    present: true
+    column: stops
+    value: -1
+    count: 55
+  duplicate_rows:
+    present: true
+    count: 56
+  stuck_sensor:
+    present: false
+    column: null
+    start_date: null
+    end_date: null
+  target_typos:
+    present: false
+    count: null
+  spelling_variants:
+    present: false
+    column: null
+    true_levels: null
+tracking:
+  experiment_name: MP249_Bus_Delay_Prediction
+  best_run_id: 960ea97bcbc345b7a9cfcb9c18486de7
+  registered_model_name: Surat_Bus_Delay_Predictor_Final
+  champion_version: 2
+monitoring:
+  psi:
+    route_km: 0.055797
+    stops: 0.03278
+    passengers: 0.027756
+    hour: 0.04656
+    temp_c: 0.019914
+    driver_exp_yr: 4.474153
+  most_drifted_feature: driver_exp_yr
+  mae_by_group:
+    North: 6.469815699520685
+    South: 5.119021450287312
+    East: 4.917144232194805
+  worst_served_group: North
+  mae_v1_on_check: 5.224204326513909
+  mae_v2_on_check: 1.9339254477511256
+  decision: promote

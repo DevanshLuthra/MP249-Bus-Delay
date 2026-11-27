@@ -1,884 +1,470 @@
-﻿\# Surat City Bus Delay Prediction ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â End-to-End MLOps
+# SURAT MOVE - City Bus Delay Prediction
 
+An end-to-end MLOps project for predicting city bus delays in Surat, India.
 
+## Project Information
 
-An end-to-end Machine Learning Operations (MLOps) project for predicting bus delays in Surat, India, using machine learning, automated testing, data versioning, model tracking, containerization, Kubernetes deployment, data drift detection, and drift-triggered retraining.
+- Group ID: G141
+- Problem ID: MP249
+- Faculty: Ravi Pratap
+- Batch: 39
+- Application: SURAT MOVE
+- Production Model: Random Forest Regressor, Version 2
 
+## Team Members
 
-
-\## Project Overview
-
-
-
-The project predicts bus delays in minutes based on route characteristics, passenger demand, weather, driver experience, and temporal information.
-
-
-
-It demonstrates the complete MLOps lifecycle, from dataset preparation and model training to production inference, monitoring, and controlled model updates.
-
-
-
-\*\*Project ID:\*\* MP249  
-
-\*\*Application:\*\* SURAT MOVE  
-
-\*\*ML Algorithm:\*\* Random Forest Regressor  
-
-\*\*Production Model:\*\* Version 2  
-
-\*\*Docker Release:\*\* v2.1
-
-
-
-\## Technology Stack
-
-
-
-| Category | Technologies |
-
+| Name | Enrollment Number |
 |---|---|
+| Akshansh Bansal | S24CSEU1714 |
+| Harit Hura Singh | S24CSEU0748 |
+| Anubhav Singh Chauhan | S24CSEU1913 |
+| Devansh Luthra | S24CSEU1706 |
+| Tanishq Gupta | S24CSEU1696 |
 
+## Project Overview
+
+SURAT MOVE predicts bus delays in minutes using historical bus operation data, route characteristics, passenger demand, weather conditions and driver experience.
+
+The project demonstrates the machine learning lifecycle from data auditing and preprocessing to model training, experiment tracking, deployment, drift monitoring and controlled model promotion.
+
+## Technology Stack
+
+| Component | Technology |
+|---|---|
 | Programming | Python 3.12 |
-
 | Data Processing | Pandas, NumPy |
-
 | Machine Learning | Scikit-learn |
-
-| Model Tracking | MLflow |
-
-| Data Versioning | DVC |
-
-| Backend | FastAPI |
-
+| Data Versioning | DVC, Google Drive |
+| Experiment Tracking | MLflow, SQLite |
+| Backend | FastAPI, Uvicorn |
 | Frontend | HTML, CSS, JavaScript |
-
 | Containerization | Docker, Docker Compose |
-
 | Orchestration | Kubernetes |
-
-| CI | GitHub Actions |
-
+| Continuous Integration | GitHub Actions |
 | Automated Testing | Pytest |
-
-| Monitoring | Python, Windows Task Scheduler |
-
+| Drift Monitoring | Population Stability Index |
 | Version Control | Git, GitHub |
 
+## System Architecture
 
-
-\## System Architecture
-
-
-
-```text
-
-&#x20;            Bus Delay Datasets
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;           Data Preprocessing
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;             DVC Versioning
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;          Random Forest Training
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;          MLflow Experiment Tracking
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;            Model Registration
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;          FastAPI Prediction API
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;            Docker Container
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;         Kubernetes Deployment
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;           SURAT MOVE Frontend
-
-
-
-&#x20;      Monitoring and Retraining Loop
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;            Drift Detection
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;          SHA256 Fingerprint Check
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;      Candidate Model Retraining
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;         Performance Comparison
-
-&#x20;                    |
-
-&#x20;                    v
-
-&#x20;       Manual Deployment Approval
-
+```mermaid
+flowchart TD
+    A[Raw Datasets] --> B[DVC Versioning]
+    B --> C[Data Audit and Cleaning]
+    C --> D[Random Forest Experiments]
+    D --> E[MLflow Tracking]
+    E --> F[Model Registry]
+    F --> G[Champion Model Artifact]
+    G --> H[FastAPI Service]
+    H --> I[Docker Image]
+    I --> J[Kubernetes - 3 Replicas]
+    K[SURAT MOVE Frontend] <--> H
+    B --> L[PSI Drift Monitoring]
+    L --> M[Candidate Evaluation]
+    M --> N[Model Comparison]
+    N --> F
+    O[GitHub Actions] --> P[Automated Tests]
 ```
 
+Detailed architecture: [Architecture Documentation](docs/architecture.md)
 
+## Stage 1 - Data Audit and Versioning
 
-\## Dataset and Features
+The original training dataset contains 1056 records.
 
-
-
-The model uses historical bus operation records.
-
-
-
-\*\*Input features:\*\*
-
-
-
-\- Route distance (`route\_km`)
-
-\- Number of stops (`stops`)
-
-\- Passenger count (`passengers`)
-
-\- Hour of travel (`hour`)
-
-\- Temperature (`temp\_c`)
-
-\- Driver experience (`driver\_exp\_yr`)
-
-\- Weather conditions (`weather`)
-
-\- Depot zone (`depot\_zone`)
-
-\- Day of week (`day\_of\_week`)
-
-\- Month (`month`)
-
-
-
-\*\*Prediction target:\*\* `delay\_min`
-
-
-
-The API derives the day of week and month automatically from the provided date.
-
-
-
-\## Machine Learning Model
-
-
-
-The project uses a `RandomForestRegressor` with preprocessing for numerical and categorical variables.
-
-
-
-\### Initial Model Performance
-
-
-
-| Metric | Result |
-
-|---|---:|
-
-| MAE | 1.4222 |
-
-| RMSE | 1.7814 |
-
-| RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â² | 0.8959 |
-
-
-
-These are baseline evaluation results.
-
-
-
-\### Drift-Triggered Retraining Evaluation
-
-
-
-A separate chronological holdout dataset was used to compare the previous production model against a retrained candidate.
-
-
-
-| Metric | Previous Model | Retrained Candidate |
-
-|---|---:|---:|
-
-| MAE | 5.4399 | 1.8291 |
-
-| RMSE | 6.6648 | 2.7338 |
-
-| RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â² | 0.3391 | 0.8888 |
-
-
-
-The candidate showed better performance on this holdout and was subsequently promoted through a controlled deployment process.
-
-
-
-These metrics are from different evaluation stages and should not be interpreted as directly comparable to the initial baseline metrics.
-
-
-
-\## MLflow Experiment Tracking
-
-
-
-MLflow is used to:
-
-
-
-\- Track training parameters and evaluation metrics
-
-\- Record model artifacts
-
-\- Compare retraining experiments
-
-\- Maintain model versions
-
-\- Support model rollback planning
-
-
-
-\*\*Registered model:\*\* `Surat\_Bus\_Delay\_Predictor`
-
-
-
-| Alias | Model Version |
-
+| Data Quality Issue | Finding |
 |---|---|
+| Duplicate rows | 56 |
+| Sentinel values | 55 raw occurrences of -1 in stops |
+| Target leakage | delay_logged_by_conductor |
+| Unit mixup | Not detected |
+| Stuck sensor | Not detected |
+| Target typos | Not detected |
+| Spelling variants | Not detected |
 
-| `champion` | 2 |
+After duplicate removal, 1000 unique training records remain.
 
-| `rollback` | 1 |
+The leaking column is excluded from model training. Invalid stop values are handled during preprocessing.
 
-
-
-MLflow aliases identify model versions; changing an alias does not automatically redeploy Kubernetes containers.
-
-
-
-\## Data Versioning with DVC
-
-
-
-DVC tracks project datasets and enables reproducible data management.
-
-
-
-Common commands:
-
-
+Training and later datasets are tracked using DVC.
 
 ```bash
-
-dvc status
-
-dvc status -c
-
 dvc pull
-
-dvc push
-
+dvc status
+dvc status -c
 ```
 
+Google Drive remote access requires appropriate permissions.
 
+## Stage 2 - Model Training and Experiment Tracking
 
-The configured remote uses Google Drive. Access to the remote requires appropriate credentials.
+The model uses six numerical and two categorical features.
 
+| Feature | Type |
+|---|---|
+| route_km | Numerical |
+| stops | Numerical |
+| passengers | Numerical |
+| hour | Numerical |
+| temp_c | Numerical |
+| driver_exp_yr | Numerical |
+| weather | Categorical |
+| depot_zone | Categorical |
 
+Prediction target: delay_min.
 
-\## FastAPI Prediction Service
+Preprocessing includes numerical median imputation and categorical one-hot encoding.
 
+Random Forest experiments use a chronological 80/20 training and validation split.
 
+### Experiment Results
 
-The application provides these endpoints:
-
-
-
-| Endpoint | Method | Description |
-
+| Trees | Maximum Depth | Validation MAE |
 |---|---|---|
+| 100 | 8 | 1.4030 |
+| 200 | 12 | 1.4055 |
+| 300 | 16 | 1.4076 |
 
-| `/` | GET | API information |
+The 100-tree, depth-8 configuration achieved the lowest validation MAE.
 
-| `/health` | GET | Health status |
+### MLflow Registry
 
-| `/predict` | POST | Predict bus delay |
+- Experiment: MP249_Bus_Delay_Prediction
+- Registered Model: Surat_Bus_Delay_Predictor_Final
+- Champion Alias: Version 2
+- Tracking Database: mlflow.db
 
-| `/app/` | GET | SURAT MOVE frontend |
+The final five experiment and registration runs record the original training dataset SHA256 hash.
 
+### Model Artifacts
 
+- models/model.joblib: deployed champion model
+- registry_artifacts/v1/: exported version 1
+- registry_artifacts/v2/: exported version 2
 
-\### Example Prediction Request
+Both exported MLflow models were successfully loaded locally.
 
+## Stage 3 - API and Deployment
 
+The FastAPI service exposes the following endpoints.
 
-```json
+| Endpoint | Method | Purpose |
+|---|---|---|
+| / | GET | API information |
+| /health | GET | Service health |
+| /predict | POST | Bus delay prediction |
+| /app/ | GET | SURAT MOVE website |
+| /docs | GET | Interactive API documentation |
 
-{
-
-&#x20; "date": "2026-08-20",
-
-&#x20; "route\_km": 15.5,
-
-&#x20; "stops": 12,
-
-&#x20; "passengers": 45,
-
-&#x20; "hour": 9,
-
-&#x20; "temp\_c": 32,
-
-&#x20; "driver\_exp\_yr": 20,
-
-&#x20; "weather": "Clear",
-
-&#x20; "depot\_zone": "Central"
-
-}
-
-```
-
-
-
-\### Example Response
-
-
+### Example Request
 
 ```json
-
 {
-
-&#x20; "predicted\_delay\_minutes": 13.7,
-
-&#x20; "model": "RandomForestRegressor",
-
-&#x20; "model\_version": "2"
-
+  "route_km": 15.5,
+  "stops": 12,
+  "passengers": 45,
+  "hour": 9,
+  "temp_c": 32,
+  "driver_exp_yr": 20,
+  "weather": "clear",
+  "depot_zone": "North"
 }
-
 ```
 
+### Verified Response
 
+```json
+{
+  "predicted_delay_minutes": 13.62,
+  "model": "RandomForestRegressor",
+  "model_version": "2"
+}
+```
 
-The example response was verified against the Kubernetes-deployed application.
+The API validates input using Pydantic and rejects invalid values with HTTP 422.
 
+Prediction events are written as structured JSON logs to standard output.
 
+## Stage 4 - Drift Detection and Retraining
 
-\## Local Setup
+Population Stability Index (PSI) is used to compare training and later data distributions.
 
+Drift threshold: 0.25.
 
+| Feature | PSI |
+|---|---:|
+| route_km | 0.055797 |
+| stops | 0.032780 |
+| passengers | 0.027756 |
+| hour | 0.046560 |
+| temp_c | 0.019914 |
+| driver_exp_yr | 4.474153 |
 
-\### 1. Clone the Repository
+The most drifted feature is driver_exp_yr.
 
+### Group-wise Performance
 
+Version 1 MAE on the later dataset:
+
+| Depot Zone | MAE |
+|---|---:|
+| North | 6.4698 |
+| South | 5.1190 |
+| East | 4.9171 |
+
+North is the worst-served group.
+
+### Retraining Results
+
+Version 1 was trained on the cleaned original dataset.
+
+Version 2 incorporates the first 70 percent of the chronologically ordered later dataset.
+
+Both models were evaluated on the remaining 30 percent of the later dataset.
+
+| Metric | Version 1 | Version 2 |
+|---|---:|---:|
+| Check-set MAE | 5.2242 | 1.9339 |
+
+MAE reduction: 62.98 percent.
+
+Promotion decision: Version 2 promoted to champion.
+
+The original experiment validation MAE and later check-set MAE represent different evaluation datasets.
+
+### Holdout Predictions
+
+250 predictions were generated.
+
+Output: predictions/holdout_predictions.csv
+
+The output contains record_id and prediction columns, with no missing predictions or duplicate record IDs.
+
+## Local Installation
+
+Clone the repository:
 
 ```bash
-
 git clone https://github.com/DevanshLuthra/MP249-Bus-Delay.git
-
 cd MP249-Bus-Delay
-
 ```
 
-
-
-\### 2. Create a Python Virtual Environment
-
-
-
-Windows PowerShell:
-
-
+Create a Python environment on Windows:
 
 ```powershell
-
 py -3.12 -m venv .venv
-
-.\\.venv\\Scripts\\Activate.ps1
-
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
 ```
 
-
-
-\### 3. Install Dependencies
-
-
+Start the API:
 
 ```bash
-
-pip install -r requirements.txt
-
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
-
-
-
-\### 4. Start the API
-
-
-
-```bash
-
-uvicorn src.api:app --host 0.0.0.0 --port 8000
-
-```
-
-
 
 Open:
 
+- Website: http://localhost:8000/app/
+- Swagger: http://localhost:8000/docs
+- Health: http://localhost:8000/health
 
+The deployed model artifact is sufficient for inference. Training datasets are required for data analysis and retraining.
 
-\- API health: `http://localhost:8000/health`
+## Data and Training Commands
 
-\- API documentation: `http://localhost:8000/docs`
-
-\- Frontend: `http://localhost:8000/app/`
-
-
-
-The trained model and required datasets must be available locally. Retrieve DVC-managed data and model artifacts where applicable before starting the service.
-
-
-
-\## Docker Deployment
-
-
-
-Build the container:
-
-
+Run from the repository root.
 
 ```bash
-
-docker build -t surat-bus-delay:v2.1 .
-
+dvc pull
+python -m src.audit_data
+python -m src.clean_data
+python -m src.psi_monitor
 ```
 
-
-
-Run the application:
-
-
+Training entry point:
 
 ```bash
-
-docker run --rm -p 8000:8000 surat-bus-delay:v2.1
-
+python -m src.train_experiments
 ```
 
-
-
-The API will be available on port 8000.
-
-
-
-Docker Compose configuration is also included in the repository.
-
-
-
-\## Kubernetes Deployment
-
-
-
-Apply the Kubernetes manifests:
-
-
+Model registration and retraining entry point:
 
 ```bash
-
-kubectl apply -f k8s/
-
+python -m src.register_models
 ```
 
+The registration script is intended for a fresh final registry. It protects existing registered versions against accidental duplication.
 
-
-Verify the deployment:
-
-
+Generate holdout predictions using the current configured deployment artifact:
 
 ```bash
-
-kubectl get deployments,pods,services
-
+python -m src.predict_holdout
 ```
 
-
-
-Forward the application service:
-
-
+## MLflow Dashboard
 
 ```bash
-
-kubectl port-forward service/surat-bus-delay-service 8002:8000
-
+mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
 ```
 
+Open http://localhost:5000.
 
+Portable model loading:
 
-Access the frontend:
+```python
+import mlflow
 
+model = mlflow.pyfunc.load_model("registry_artifacts/v2")
+```
 
-
-`http://localhost:8002/app/`
-
-
-
-\*\*Note:\*\* The Kubernetes deployment references a locally hosted Docker image registry. Other environments must configure an accessible registry and image reference before deployment.
-
-
-
-\## Data Drift Detection
-
-
-
-The project detects statistical changes between the reference training data and later observations.
-
-
-
-Drift detection includes:
-
-
-
-\- KolmogorovÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“Smirnov tests for numerical features
-
-\- Chi-square tests for categorical features
-
-\- Per-feature drift reporting
-
-\- Overall drift status
-
-
-
-Run manually:
-
-
+## Docker Deployment
 
 ```bash
-
-python src/detect\_drift.py
-
+docker compose build
+docker compose up -d
+docker compose ps
 ```
 
+- Image: mp249-api:1.0
+- Container Port: 8000
+- Host Port: 8001
 
+Website: http://localhost:8001/app/
 
-Outputs include:
+View logs:
 
+```bash
+docker compose logs
+```
 
+Stop the application:
+
+```bash
+docker compose down
+```
+
+## Kubernetes Deployment
+
+The local Kubernetes configuration uses:
+
+- Deployment: mp249-api
+- Service: mp249-svc
+- Replicas: 3
+- Service Type: ClusterIP
+- Service Port: 80
+- Container Port: 8000
+- Readiness and liveness health probes
+
+The image must be available in the Kubernetes node runtime because imagePullPolicy is Never.
+
+For the tested Docker Desktop configuration, using Windows PowerShell:
+
+```powershell
+docker save -o mp249-api-1.0.tar mp249-api:1.0
+cmd.exe /c "docker exec -i desktop-control-plane ctr -n k8s.io images import --platform linux/amd64 - < mp249-api-1.0.tar"
+```
+
+Apply the manifests:
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl rollout status deployment/mp249-api
+kubectl get pods -l app=mp249-api
+```
+
+Forward the service:
+
+```bash
+kubectl port-forward service/mp249-svc 8005:80
+```
+
+Website: http://localhost:8005/app/
+
+Final local verification confirmed three ready replicas, zero pod restarts, successful health checks, prediction requests and JSON logging.
+
+## Monitoring
+
+Run the PSI monitoring script:
+
+```bash
+python scripts/monitor_drift.py
+```
+
+Monitoring outputs:
+
+- reports/psi_report.json
+- reports/monitoring_history.csv
+- logs/drift_monitor.log
+- logs/drift_alerts.log
+
+The monitoring script detects drift and generates alerts without automatically replacing the champion model.
+
+## Automated Testing and CI
+
+```bash
+python -m pytest tests/ -v
+```
+
+Latest verified local result: 16 passed, 0 failed.
+
+GitHub Actions workflow:
+
+.github/workflows/ci.yml
+
+The workflow installs dependencies and runs pytest on configured push and pull request events.
+
+[GitHub Actions](https://github.com/DevanshLuthra/MP249-Bus-Delay/actions)
+
+## Repository Structure
 
 ```text
-
-reports/drift\_report.csv
-
-reports/drift\_summary.json
-
+MP249-Bus-Delay/
+    app/
+    src/
+    frontend/
+    tests/
+    data/
+        raw/
+    models/
+    registry_artifacts/
+    predictions/
+    reports/
+    scripts/
+    docs/
+    k8s/
+    .github/workflows/
+    .dvc/
+    Dockerfile
+    compose.yaml
+    requirements.txt
+    params.yaml
+    mlflow.db
+    findings.yaml
+    GROUP.md
+    README.md
 ```
 
-
-
-The monitored dataset previously showed drift in `driver\_exp\_yr`.
-
-
-
-\## Automated Monitoring and Retraining
-
-
-
-The monitoring workflow is implemented in:
-
-
-
-```text
-
-scripts/monitor\_drift.py
-
-```
-
-
-
-It performs the following operations:
-
-
-
-1\. Run drift detection.
-
-2\. Record monitoring results.
-
-3\. Calculate a SHA256 fingerprint of the input datasets.
-
-4\. Skip retraining when the same dataset has already been successfully evaluated.
-
-5\. Trigger candidate retraining when drift is detected on a dataset requiring evaluation.
-
-6\. Compare candidate performance against the existing model.
-
-7\. Save reports and logs.
-
-8\. Require manual approval before production deployment.
-
-
-
-Run monitoring manually:
-
-
-
-```bash
-
-python scripts/monitor\_drift.py
-
-```
-
-
-
-\### Scheduled Monitoring
-
-
-
-On the configured Windows development machine, Task Scheduler runs:
-
-
-
-\*\*Task:\*\* `SuratBusDelayDriftMonitoring`  
-
-\*\*Schedule:\*\* Daily at 9:00 PM
-
-
-
-The task is local to the configured Windows machine and is not automatically installed by cloning the repository.
-
-
-
-\### Monitoring Outputs
-
-
-
-```text
-
-reports/monitoring\_history.csv
-
-reports/retraining\_state.json
-
-logs/drift\_monitor.log
-
-logs/drift\_alerts.log
-
-reports/retraining\_report.json
-
-```
-
-
-
-The retraining state file is intentionally excluded from Git. New installations must initialize or establish their own evaluation state; otherwise, the first drift-triggered evaluation may run again.
-
-
-
-\## Continuous Integration
-
-
-
-GitHub Actions automatically executes the project's CI workflow on configured repository events.
-
-
-
-\*\*Workflow:\*\* `.github/workflows/ci.yml`
-
-
-
-The workflow provides automated validation of the project.
-
-
-
-GitHub Actions history:
-
-
-
-https://github.com/DevanshLuthra/MP249-Bus-Delay/actions
-
-
-
-\## Automated Testing
-
-
-
-Run the complete test suite:
-
-
-
-```bash
-
-python -m pytest tests -v
-
-```
-
-
-
-Latest verified local result:
-
-
-
-\*\*12 tests passed, 0 failed.\*\*
-
-
-
-Tests cover API behavior, data preprocessing, model training, inference, and unseen-category handling.
-
-
-
-\## Deployment and Rollback Strategy
-
-
-
-The project retains deployment revision history in Kubernetes.
-
-
-
-| Revision | Image | Description |
-
-|---|---|---|
-
-| 1 | v1 | Initial model |
-
-| 2 | v2 | Retrained model |
-
-| 3 | v2.1 | Retrained model with corrected API version |
-
-
-
-View rollout history:
-
-
-
-```bash
-
-kubectl rollout history deployment/surat-bus-delay
-
-```
-
-
-
-The previous revisions are available in rollout history. An actual production rollback has not yet been executed as part of final verification.
-
-
-
-Model promotion is controlled rather than automatically performed by the monitoring script.
-
-
-
-\## Project Highlights
-
-
-
-\- End-to-end machine learning pipeline
-
-\- Reproducible data versioning with DVC
-
-\- MLflow experiment tracking and model registry
-
-\- Production inference with FastAPI
-
-\- User-facing SURAT MOVE frontend
-
-\- Docker containerization
-
-\- Kubernetes orchestration
-
-\- GitHub Actions CI
-
-\- Automated data drift detection
-
-\- Drift-triggered candidate retraining
-
-\- SHA256-based duplicate retraining prevention
-
-\- Controlled model promotion and rollback readiness
-
-
-
-\## Future Improvements
-
-
-
-Potential enhancements include:
-
-
-
-\- Live GPS and traffic data ingestion
-
-\- Real-time passenger demand integration
-
-\- Automated cloud deployment
-
-\- Monitoring dashboards and alert notifications
-
-\- Additional model-performance monitoring
-
-\- Distributed data processing
-
-\- Automated approval workflows with deployment safeguards
-
-
-
-\## Repository
-
-
-
-https://github.com/DevanshLuthra/MP249-Bus-Delay
-
-
-
-\*\*Project:\*\* MP249 ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Surat City Bus Delay Prediction
-
-
-
-\*\*Purpose:\*\* Academic demonstration of an end-to-end MLOps lifecycle.
-
-## Detailed System Architecture
-
-[View MLOps Architecture Diagram](docs/architecture.md)
-
+## Known Limitations
+
+- Five historical MLflow runs predate the final dataset-hash logging implementation and do not contain data_sha256.
+- The original MLflow database contains machine-specific artifact paths. Exported models can be loaded independently, but registry alias loading on another machine requires artifact-path migration.
+- Changing the MLflow champion alias does not automatically replace the deployed model artifact.
+- Scheduled Windows monitoring is currently disabled.
+- The final monitoring script generates alerts; future candidate retraining and deployment require manual evaluation.
+- Kubernetes deployment was verified on a local Docker Desktop cluster, not a public cloud.
+- Older training and statistical drift scripts are retained for historical reference. The final workflow uses the experiment, registration and PSI modules described above.
+
+## Future Improvements
+
+- Live GPS and traffic data integration
+- Cloud-based deployment
+- Centralized monitoring dashboards
+- Portable MLflow artifact storage
+- Automated candidate evaluation with deployment approval
+- Model and data quality monitoring
+
+## Conclusion
+
+SURAT MOVE demonstrates an end-to-end academic MLOps implementation with reproducible data management, experiment tracking, model registration, API deployment, container orchestration, automated testing and drift-based model improvement.

@@ -9,7 +9,7 @@ from scipy.stats import ks_2samp, chi2_contingency
 ROOT = Path(__file__).resolve().parents[1]
 
 TRAIN_PATH = ROOT / "data" / "train_clean.csv"
-LATER_PATH = ROOT / "data" / "later.csv"
+LATER_PATH = ROOT / "data" / "raw" / "later.csv"
 REPORT_PATH = ROOT / "reports" / "drift_report.csv"
 SUMMARY_PATH = ROOT / "reports" / "drift_summary.json"
 

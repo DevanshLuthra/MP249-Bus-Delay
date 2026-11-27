@@ -40,7 +40,7 @@ async function checkHealth() {
     const response = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(5000) });
     if (!response.ok) throw new Error('API unavailable');
     const data = await response.json();
-    const healthy = data.status === 'healthy';
+    const healthy = data.status === 'ok';
     statusEl.textContent = healthy ? 'Prediction engine online' : 'Trained model unavailable';
     statusBox.classList.toggle('offline', !healthy);
   } catch {
@@ -73,7 +73,7 @@ form.addEventListener('submit', async (event) => {
   if (!form.reportValidity()) return;
 
   const payload = {
-    date: dateInput.value,
+
     route_km: Number(document.getElementById('route_km').value),
     stops: Number(document.getElementById('stops').value),
     passengers: Number(document.getElementById('passengers').value),

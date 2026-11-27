@@ -1,23 +1,22 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: surat-bus-delay
+  name: mp249-api
   labels:
-    app: surat-bus-delay
+    app: mp249-api
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: surat-bus-delay
+      app: mp249-api
   template:
     metadata:
       labels:
-        app: surat-bus-delay
+        app: mp249-api
     spec:
       containers:
-        - name: surat-bus-delay
-          image: host.docker.internal:5001/surat-bus-delay:v2.1
+        - name: mp249-api
+          image: mp249-api:1.0
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
@@ -26,4 +25,12 @@ spec:
               path: /health
               port: 8000
             initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5

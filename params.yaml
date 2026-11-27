@@ -1,0 +1,56 @@
+project:
+  group_id: G141
+  problem_id: MP249
+  random_state: 42
+
+data:
+  train: data/raw/train.csv
+  cleaned_train: data/train_clean.csv
+  later: data/raw/later.csv
+  holdout: data/raw/holdout_features.csv
+  target: delay_min
+  id_column: record_id
+  date_column: date
+
+features:
+  numerical:
+    - route_km
+    - stops
+    - passengers
+    - hour
+    - temp_c
+    - driver_exp_yr
+  categorical:
+    - weather
+    - depot_zone
+
+training:
+  validation_fraction: 0.20
+  experiments:
+    - n_estimators: 100
+      max_depth: 8
+    - n_estimators: 200
+      max_depth: 12
+    - n_estimators: 300
+      max_depth: 16
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: MP249_Bus_Delay_Prediction
+  registered_model_name: Surat_Bus_Delay_Predictor_Final
+  champion_alias: champion
+
+monitoring:
+  psi_bins: 10
+  psi_epsilon: 0.0001
+  psi_threshold: 0.25
+
+retraining:
+  training_fraction: 0.70
+  check_fraction: 0.30
+  minimum_mae_improvement: 0.05
+
+output:
+  model: models/model.joblib
+  findings: reports/findings.yaml
+  predictions: predictions/holdout_predictions.csv

@@ -17,12 +17,11 @@ def test_home():
 def test_health():
     response = client.get("/health")
     assert response.status_code == 200
-    assert response.json()["status"] in ["healthy", "model_missing"]
+    assert response.json() == {"status": "ok"}
 
 
 def test_invalid_prediction():
     response = client.post("/predict", json={
-        "date": "2026-11-22",
         "route_km": -5,
         "stops": 20,
         "passengers": 45,

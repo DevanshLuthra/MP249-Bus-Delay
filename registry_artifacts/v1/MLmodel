@@ -1,0 +1,23 @@
+artifact_path: file:C:/Users/devan/Desktop/MP249-Bus-Delay/mlruns/1/models/m-bbc390794cfe4df8bf3f74937180e533/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.9.1
+    skops_trusted_types: null
+mlflow_version: 3.18.0
+model_id: m-bbc390794cfe4df8bf3f74937180e533
+model_size_bytes: 2951566
+model_uuid: m-bbc390794cfe4df8bf3f74937180e533
+prompts: null
+run_id: 960ea97bcbc345b7a9cfcb9c18486de7
+utc_time_created: '2026-11-27 13:43:46.978131'

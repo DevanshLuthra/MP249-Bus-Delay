@@ -1,13 +1,12 @@
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: surat-bus-delay-service
+  name: mp249-svc
 spec:
   type: ClusterIP
   selector:
-    app: surat-bus-delay
+    app: mp249-api
   ports:
-    - port: 8000
+    - port: 80
       targetPort: 8000
       protocol: TCP

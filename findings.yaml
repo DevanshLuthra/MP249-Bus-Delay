@@ -1,62 +1,53 @@
-# MP249 findings --- fill in every value, keep every key.
-# The marking tool reads this file. Write null only where the comment says so.
-# Use the exact column names and group values from your data files.
-
-group_id: "G141"          # your group id, e.g. "G042"
-problem_id: "MP249"
-
+group_id: G141
+problem_id: MP249
 data_issues:
-  # For each of the 7 kinds: present: true or false.
-  # If present is false, leave the other values as null.
   leaking_column:
-    present: null
-    column: null           # the column that must not be used as a feature
+    present: true
+    column: delay_logged_by_conductor
   unit_mixup:
-    present: null
-    column: null           # the column recorded in a different unit
-    group_value: null      # the value of depot_zone whose rows are affected
-    factor: null           # wrong value = right value x factor
+    present: false
+    column: null
+    group_value: null
+    factor: null
   sentinel_value:
-    present: null
-    column: null
-    value: null            # the special number typed instead of a blank
-    count: null            # how many rows have it
+    present: true
+    column: stops
+    value: -1
+    count: 55
   duplicate_rows:
-    present: null
-    count: null            # number of EXTRA copies (rows you would delete)
+    present: true
+    count: 56
   stuck_sensor:
-    present: null
+    present: false
     column: null
-    start_date: null       # first date with the stuck value, YYYY-MM-DD
-    end_date: null         # last date with the stuck value, YYYY-MM-DD
+    start_date: null
+    end_date: null
   target_typos:
-    present: null
-    count: null            # rows whose target was typed 10 times too big
+    present: false
+    count: null
   spelling_variants:
-    present: null
+    present: false
     column: null
-    true_levels: null      # how many real categories there are after cleaning
-
+    true_levels: null
 tracking:
-  experiment_name: null
-  best_run_id: null        # the MLflow run id of your v1 model
-  registered_model_name: null
-  champion_version: null
-
+  experiment_name: MP249_Bus_Delay_Prediction
+  best_run_id: 960ea97bcbc345b7a9cfcb9c18486de7
+  registered_model_name: Surat_Bus_Delay_Predictor_Final
+  champion_version: 2
 monitoring:
-  psi:                     # cleaned train.csv vs later.csv, 10 bins
-    route_km: null
-    stops: null
-    passengers: null
-    hour: null
-    temp_c: null
-    driver_exp_yr: null
-  most_drifted_feature: null
-  mae_by_group:            # v1 on later.csv, per value of depot_zone
-    'North': null
-    'South': null
-    'East': null
-  worst_served_group: null
-  mae_v1_on_check: null    # v1 on the last 30% of later.csv (by date)
-  mae_v2_on_check: null    # v2 on the same rows
-  decision: null           # promote or keep
+  psi:
+    route_km: 0.055797
+    stops: 0.03278
+    passengers: 0.027756
+    hour: 0.04656
+    temp_c: 0.019914
+    driver_exp_yr: 4.474153
+  most_drifted_feature: driver_exp_yr
+  mae_by_group:
+    North: 6.469815699520685
+    South: 5.119021450287312
+    East: 4.917144232194805
+  worst_served_group: North
+  mae_v1_on_check: 5.224204326513909
+  mae_v2_on_check: 1.9339254477511256
+  decision: promote
