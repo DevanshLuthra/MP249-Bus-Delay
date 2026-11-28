@@ -448,8 +448,8 @@ MP249-Bus-Delay/
 
 ## Known Limitations
 
-- Five historical MLflow runs predate the final dataset-hash logging implementation and do not contain data_sha256.
-- The original MLflow database contains machine-specific artifact paths. Exported models can be loaded independently, but registry alias loading on another machine requires artifact-path migration.
+- The final MLflow database contains five independently reproduced experiments, all logging the required data_sha256 parameter and MAE metric. The original database contained ten runs, including five historical runs with incomplete logging. Original records remain preserved in Git history at commit 30fb1a1 and in a separate local archive.
+- The reproduced MLflow database references the exported registry models. Artifact paths are machine-specific and require migration on another machine. The exported models can also be loaded independently.
 - Changing the MLflow champion alias does not automatically replace the deployed model artifact.
 - Scheduled Windows monitoring is currently disabled.
 - The final monitoring script generates alerts; future candidate retraining and deployment require manual evaluation.
@@ -468,3 +468,27 @@ MP249-Bus-Delay/
 ## Conclusion
 
 SURAT MOVE demonstrates an end-to-end academic MLOps implementation with reproducible data management, experiment tracking, model registration, API deployment, container orchestration, automated testing and drift-based model improvement.
+
+
+## Final Experiment Reproduction
+
+The final experiments were reproduced on 28 November 2026.
+
+- Compliant runs: 5 out of 5
+- Best tuning MAE: 1.403000
+- V1 check MAE: 5.224204
+- V2 check MAE: 1.933925
+- MAE improvement: 62.98%
+- Champion version: 2
+- Holdout predictions verified: 250
+- Maximum prediction difference: 7.11e-15
+- Original deployed model retained.
+
+Final V1 run: 795e2816ab954b94bb206c8a483bf030
+
+Final V2 run: 71ae3412c65f4a239e74370104663aab
+
+Best tuning run: 2fdd2e22f91a46558eaf6fd1b411f86a
+
+The reproduced database is a new final experiment record, not a
+retroactive modification of historical training results.

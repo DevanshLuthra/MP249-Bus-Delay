@@ -1,4 +1,4 @@
-artifact_path: file:C:/Users/devan/Desktop/MP249-Bus-Delay/mlruns/1/models/m-168115a704684564b40bc4eec38f29ee/artifacts
+artifact_path: file:C:/Users/devan/Desktop/MP249-MLflow-Reproduction/mlruns/1/models/m-bb64fe3705544d11b1dd8d1cf60c2e94/artifacts
 flavors:
   python_function:
     env:
@@ -15,9 +15,9 @@ flavors:
     sklearn_version: 1.9.1
     skops_trusted_types: null
 mlflow_version: 3.18.0
-model_id: m-168115a704684564b40bc4eec38f29ee
+model_id: m-bb64fe3705544d11b1dd8d1cf60c2e94
 model_size_bytes: 2797054
-model_uuid: m-168115a704684564b40bc4eec38f29ee
+model_uuid: m-bb64fe3705544d11b1dd8d1cf60c2e94
 prompts: null
-run_id: 5e5d8bb35e814c168484381050a195d0
-utc_time_created: '2026-11-27 13:44:12.629537'
+run_id: 71ae3412c65f4a239e74370104663aab
+utc_time_created: '2026-11-28 14:07:38.554337'
