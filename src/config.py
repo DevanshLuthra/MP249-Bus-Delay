@@ -1,17 +1,4 @@
-﻿from pathlib import Path
-import hashlib
-import yaml
-
-ROOT = Path(__file__).resolve().parents[1]
-
-def load_config():
-    with open(ROOT / "params.yaml", encoding="utf-8-sig") as file:
-        return yaml.safe_load(file)
-
-def get_data_hash():
-    config = load_config()
-    path = ROOT / config["data"]["train"]
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+﻿from src.mp249.config import ROOT, load_config, get_data_hash
 
 if __name__ == "__main__":
     config = load_config()
