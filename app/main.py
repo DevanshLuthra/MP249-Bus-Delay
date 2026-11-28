@@ -1,1 +1,1 @@
-﻿from src.api import app
+﻿from src.mp249.api import app
