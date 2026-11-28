@@ -1,7 +1,7 @@
 
 from pathlib import Path
 import json
-
+import hashlib
 import joblib
 import mlflow
 import numpy as np
@@ -101,6 +101,9 @@ def main():
 
     with mlflow.start_run(run_name="Drift_Triggered_Retraining"):
         mlflow.log_params({
+	    "data_sha256": hashlib.sha256(
+                (ROOT / "data" / "raw" / "train.csv").read_bytes()
+            ).hexdigest(),
             "trigger": "data_drift",
             "training_rows": len(combined),
             "holdout_rows": len(holdout),
@@ -109,6 +112,7 @@ def main():
         })
 
         mlflow.log_metrics({
+	    "mae": candidate_metrics["mae"],
             "existing_mae": existing_metrics["mae"],
             "candidate_mae": candidate_metrics["mae"],
             "existing_rmse": existing_metrics["rmse"],

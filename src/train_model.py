@@ -1,5 +1,6 @@
 
 from pathlib import Path
+import hashlib
 import joblib
 import mlflow
 import mlflow.sklearn
@@ -110,6 +111,7 @@ with mlflow.start_run(run_name="RandomForest_Baseline"):
 
     mlflow.log_params(
         {
+	    "data_sha256": hashlib.sha256(DATA_PATH.read_bytes()).hexdigest(),
             "model": "RandomForestRegressor",
             "n_estimators": 200,
             "max_depth": 12,
